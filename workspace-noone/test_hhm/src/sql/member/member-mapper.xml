@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="loginMember">
+		SELECT 
+			   USER_NO
+			 , USER_ID
+			 , USER_PWD
+			 , USER_NAME
+			 , EMAIL
+			 , PHONE
+			 , ADDRESS
+			 , ADDRESS_DETAIL
+			 , ADDRESS_CODE
+			 , QUIT
+			 , MANAGER
+			 , REPORT_AMOUNT
+		  FROM "USER"
+		 WHERE USER_ID = ? 
+		   AND USER_PWD = ? 
+		   AND QUIT = 'N'
+	</entry>
+	<entry key="MemberInsert">
+		INSERT
+		    INTO "USER"(
+		            USER_NO
+		          , USER_ID
+		          , USER_PWD
+		          , USER_NAME
+		          , EMAIL
+		          , PHONE
+		          )
+		    VALUES(
+		            SEQ_UNO.NEXTVAL
+		          , ?
+		          , ?
+		          , ?
+		          , ?
+		          , ?
+		        )
+	</entry>
+	
+	<entry key="CheckId">
+		SELECT COUNT(*)
+		FROM "USER"
+		WHERE USER_ID = ?
+	</entry>
+	
+		<entry key="updateMember">
+		UPDATE
+			"USER"
+		SET
+		  	USER_PWD=?
+		  , USER_NAME=?
+		  , EMAIL=?
+		  , PHONE=?
+		  , ADDRESS=?
+		  , ADDRESS_DETAIL=?
+		  , ADDRESS_CODE=?
+		WHERE
+			USER_ID=?
+		AND QUIT='N'
+	</entry>
+	<entry key="selectMyOrderListASC">
+	SELECT *
+    FROM(
+         SELECT
+                ROWNUM RNUM
+              , A.*
+          FROM(
+                 SELECT
+                  P_NO
+                , ORDER_NO
+                , CART_AMOUNT 
+                , P_THUMB_URL 
+                , P_NAME      
+                , PAY_COST    
+                , ORDER_DATE  
+                , D_STATUS    
+                , SHOPPING_STATUS
+                , D_COMPANY   
+                , D_NUMBER    
+                FROM SHOPPING S
+                JOIN "ORDER" USING(ORDER_NO)
+                JOIN PRODUCT USING(P_NO)
+                WHERE S.USER_NO=?
+                AND ORDER_STATUS='Y'
+                ORDER BY ORDER_DATE ASC
+                ) A
+        )
+    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectMyOrderListDESC">
+	SELECT *
+    FROM(
+         SELECT
+                ROWNUM RNUM
+              , A.*
+          FROM(
+                 SELECT
+                  P_NO
+                , ORDER_NO
+                , CART_AMOUNT 
+                , P_THUMB_URL 
+                , P_NAME      
+                , PAY_COST    
+                , ORDER_DATE  
+                , D_STATUS    
+                , SHOPPING_STATUS
+                , D_COMPANY   
+                , D_NUMBER    
+                FROM SHOPPING S
+                JOIN "ORDER" USING(ORDER_NO)
+                JOIN PRODUCT USING(P_NO)
+                WHERE S.USER_NO=?
+                AND ORDER_STATUS='Y'
+                ORDER BY ORDER_DATE DESC
+                ) A
+        )
+    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectMyOrderCount">
+	SELECT
+    COUNT(*) LISTCOUNT
+	 FROM (
+	         SELECT
+	          P_NO
+	        , ORDER_NO
+	        , CART_AMOUNT 
+	        , P_THUMB_URL 
+	        , P_NAME      
+	        , PAY_COST    
+	        , ORDER_DATE  
+	        , D_STATUS    
+	        , SHOPPING_STATUS
+	        , D_COMPANY   
+	        , D_NUMBER    
+	        FROM SHOPPING S
+	        JOIN "ORDER" USING(ORDER_NO)
+	        JOIN PRODUCT USING(P_NO)
+	        WHERE S.USER_NO=?
+	        AND ORDER_STATUS='Y'
+	        )
+	</entry>
+	<entry key="cancelOrder">
+	UPDATE
+		  SHOPPING
+		  SET
+		  SHOPPING_STATUS='R'
+		  WHERE ORDER_NO=?
+	</entry>
+	
+</properties>

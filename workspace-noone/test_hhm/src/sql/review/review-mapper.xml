@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="selectRtotal">
+		SELECT COUNT(*)
+		FROM REVIEW
+	</entry>
+	<entry key="selectReviewList">
+		SELECT * 
+		FROM( SELECT ROW_NUMBER() OVER(ORDER BY REVIEW_DATE DESC) row_num
+		          ,REVIEW_NO
+		          ,REVIEW_TITLE
+		          ,REVIEW_CONTENT
+		          ,REVIEW_DATE
+		          ,REIVEW_RATING
+		          ,P_NO
+		          ,USER_NO
+		          ,USER_NAME
+		       FROM REVIEW
+		       JOIN "USER" USING(USER_NO)
+		       )
+		WHERE row_num BETWEEN ? AND ?
+    </entry>
+    <entry key="insertReport">
+		INSERT INTO REPORT(
+		                   REPORT_NO
+		                 , USER_NO
+		                 , REPORT_CLASS_NO
+		                 , REPORT_CONTENT
+		                 , REPORT_CATE
+		                 , REPORT_CATE_NO
+		                       )
+		                  VALUES(
+		                         SEQ_RPNO.NEXTVAL
+		                       , ?
+		                       , ?
+		                       , ?
+		                       , ?
+		                       , ?
+		                        )
+    </entry>
+</properties>

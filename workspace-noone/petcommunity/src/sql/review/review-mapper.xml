@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="selectRtotal">
+		SELECT COUNT(*)
+		FROM REPORT
+		WHERE REPORT_CATE = 'V'
+	</entry>
+	<entry key="selectRtotal2">
+		SELECT COUNT(*)
+		FROM REPORT
+		WHERE REPORT_CATE = 'V' AND REPORT_STATUS = ?
+	</entry>
+	<entry key="selectReviewList">
+		SELECT * 
+		FROM( SELECT ROW_NUMBER() OVER(ORDER BY REPORT_DATE DESC) row_num
+		          ,REPORT_CLASS_NO
+		          ,REPORT_CONTENT
+		          ,REPORT_CATE_NO
+		          ,USER_NAME
+                  ,REPORT_STATUS
+		       FROM REPORT
+		       JOIN "USER" USING(USER_NO)
+               WHERE REPORT_CATE = 'V'
+		       )
+		WHERE row_num BETWEEN ? AND ?
+    </entry>
+    <entry key="selectReviewList2">
+		SELECT * 
+		FROM( SELECT ROW_NUMBER() OVER(ORDER BY REPORT_DATE DESC) row_num
+		          ,REPORT_CLASS_NO
+		          ,REPORT_CONTENT
+		          ,REPORT_CATE_NO
+		          ,USER_NAME
+                  ,REPORT_STATUS
+		       FROM REPORT
+		       JOIN "USER" USING(USER_NO)
+               WHERE REPORT_CATE = 'V' AND REPORT_STATUS = ?
+		       )
+		WHERE row_num BETWEEN ? AND ?
+    </entry>
+    <entry key="insertReport">
+		INSERT INTO REPORT(
+		                   REPORT_NO
+		                 , USER_NO
+		                 , REPORT_CLASS_NO
+		                 , REPORT_CONTENT
+		                 , REPORT_CATE
+		                 , REPORT_CATE_NO
+		                       )
+		                  VALUES(
+		                         SEQ_RPNO.NEXTVAL
+		                       , ?
+		                       , ?
+		                       , ?
+		                       , ?
+		                       , ?
+		                        )
+    </entry>
+    <entry key="deleteReview">
+		UPDATE REVIEW 
+		SET STATUS = 'N'
+		WHERE REVIEW_NO = ?
+    </entry>
+    <entry key="changeStatus">
+    	UPDATE REPORT
+		SET REPORT_STATUS = 'Y'
+		WHERE REPORT_CATE_NO = ?
+    </entry>
+</properties>

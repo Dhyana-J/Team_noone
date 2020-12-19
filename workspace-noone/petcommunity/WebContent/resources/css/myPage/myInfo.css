@@ -1,0 +1,51 @@
+
+.header{
+	height:120px !important;
+}
+
+
+.myInfoWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+.myInfoWrap > h1 {
+  margin-top: 100px;
+  margin-bottom: 70px;
+  font-size: 50px;
+}
+
+.myInfoWarp form {
+  width: 50%;
+  height: 800px;
+}
+
+#infoTable {
+  width: 100%;
+  height: 80%;
+}
+
+#infoTable * {
+  font-size: 25px;
+}
+
+#infoTable td {
+  text-align: left;
+}
+
+#infoTable input {
+  margin-left: 30px;
+  width: 70%;
+  border-radius: 5px;
+  border: 1px solid gray;
+}
+
+form > button {
+  width: 70%;
+  height: 70px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 40px;
+  font-size: 30px;
+}

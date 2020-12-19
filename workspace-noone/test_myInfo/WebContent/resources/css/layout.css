@@ -1,0 +1,40 @@
+.wrapper * {
+  text-align: center;
+}
+.wrapper {
+  height: 150vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  height: 120px;
+}
+
+.nav {
+  height: 60px;
+}
+
+.main {
+  height: 100%;
+  display: flex;
+}
+
+.sideBar {
+  width: 20%;
+}
+.content {
+  width: 80%;
+}
+
+.topBtn {
+  border: none;
+  background: none;
+  font-size: 30px;
+  position: fixed;
+  right: 100px;
+  bottom: 120px;
+}
+.topBtn:hover {
+  text-decoration: none;
+}

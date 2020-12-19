@@ -1,0 +1,15 @@
+
+#list_area{
+    width:700px;
+    height:500px;
+    border: 1px solid burlywood;
+    font-size:x-large;
+}
+#list_area>tbody tr{
+    border: 1px solid burlywood;
+
+}
+#list_area_w{
+    width:500px;
+    height:100px;
+}

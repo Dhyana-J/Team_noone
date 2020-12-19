@@ -1,0 +1,47 @@
+.wrapper * {
+  text-align: center;
+  /* border: 1px solid red; */
+}
+.wrapper {
+  height: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex;
+}
+
+.header {
+  height: 120px;
+}
+.header * {
+  /* border: 1px solid red; */
+}
+
+.navi {
+  height: 60px;
+}
+
+.main {
+  height: 100%;
+  display: flex;
+}
+
+.sideBar {
+  width: 20%;
+  font-size:large;
+}
+
+.content {
+  width: 80%;
+}
+
+.topBtn {
+  border: none;
+  background: none;
+  font-size: 30px;
+  position: fixed;
+  right: 100px;
+  bottom: 120px;
+}
+.topBtn:hover {
+  text-decoration: none;
+}

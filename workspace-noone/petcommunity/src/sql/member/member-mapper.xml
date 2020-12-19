@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="loginMember">
+		SELECT 
+			   USER_NO
+			 , USER_ID
+			 , USER_PWD
+			 , USER_NAME
+			 , EMAIL
+			 , PHONE
+			 , ADDRESS
+			 , ADDRESS_DETAIL
+			 , ADDRESS_CODE
+			 , QUIT
+			 , MANAGER
+			 , REPORT_AMOUNT
+		  FROM "USER"
+		 WHERE USER_ID = ? 
+		   AND USER_PWD = ? 
+		   AND QUIT = 'N'
+	</entry>
+	<entry key="MemberInsert">
+		INSERT
+		    INTO "USER"(
+		            USER_NO
+		          , USER_ID
+		          , USER_PWD
+		          , USER_NAME
+		          , EMAIL
+		          , PHONE
+		          )
+		    VALUES(
+		            SEQ_UNO.NEXTVAL
+		          , ?
+		          , ?
+		          , ?
+		          , ?
+		          , ?
+		        )
+	</entry>
+	<entry key="CheckId">
+		SELECT COUNT(*)
+		FROM "USER"
+		WHERE USER_ID = ?
+	</entry>
+	<entry key="updateMember">
+		UPDATE
+			"USER"
+		SET
+		  	USER_PWD=?
+		  , USER_NAME=?
+		  , EMAIL=?
+		  , PHONE=?
+		  , ADDRESS=?
+		  , ADDRESS_DETAIL=?
+		  , ADDRESS_CODE=?
+		WHERE
+			USER_ID=?
+		AND QUIT='N'
+	</entry>
+	<entry key="selectMyOrderListASC">
+	SELECT *
+    FROM(
+         SELECT
+                ROWNUM RNUM
+              , A.*
+          FROM(
+                 SELECT
+                  P_NO
+                , ORDER_NO
+                , CART_AMOUNT 
+                , P_THUMB_URL 
+                , P_NAME      
+                , PAY_COST    
+                , ORDER_DATE  
+                , D_STATUS    
+                , SHOPPING_STATUS
+                , D_COMPANY   
+                , D_NUMBER    
+                FROM SHOPPING S
+                JOIN "ORDER" USING(ORDER_NO)
+                JOIN PRODUCT USING(P_NO)
+                WHERE S.USER_NO=?
+                AND ORDER_STATUS='Y'
+                ORDER BY ORDER_DATE ASC
+                ) A
+        )
+    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectMyOrderListDESC">
+	SELECT *
+    FROM(
+         SELECT
+                ROWNUM RNUM
+              , A.*
+          FROM(
+                 SELECT
+                  P_NO
+                , ORDER_NO
+                , CART_AMOUNT 
+                , P_THUMB_URL 
+                , P_NAME      
+                , PAY_COST    
+                , ORDER_DATE  
+                , D_STATUS    
+                , SHOPPING_STATUS
+                , D_COMPANY   
+                , D_NUMBER    
+                FROM SHOPPING S
+                JOIN "ORDER" USING(ORDER_NO)
+                JOIN PRODUCT USING(P_NO)
+                WHERE S.USER_NO=?
+                AND ORDER_STATUS='Y'
+                ORDER BY ORDER_DATE DESC
+                ) A
+        )
+    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectMyOrderCount">
+	SELECT
+    COUNT(*) LISTCOUNT
+	 FROM (
+	         SELECT
+	          P_NO
+	        , ORDER_NO
+	        , CART_AMOUNT 
+	        , P_THUMB_URL 
+	        , P_NAME      
+	        , PAY_COST    
+	        , ORDER_DATE  
+	        , D_STATUS    
+	        , SHOPPING_STATUS
+	        , D_COMPANY   
+	        , D_NUMBER    
+	        FROM SHOPPING S
+	        JOIN "ORDER" USING(ORDER_NO)
+	        JOIN PRODUCT USING(P_NO)
+	        WHERE S.USER_NO=?
+	        AND ORDER_STATUS='Y'
+	        )
+	</entry>
+	<entry key="cancelOrder">
+	UPDATE
+		  SHOPPING
+		  SET
+		  SHOPPING_STATUS='R'
+		  WHERE ORDER_NO=?
+	</entry>
+	<entry key="loginMember">
+	SELECT *
+	  FROM "USER"
+     WHERE USER_ID = ?
+	   AND USER_PWD = ?
+	   AND QUIT = 'N'
+	</entry>
+	<entry key="findId">
+	SELECT USER_ID
+	  FROM "USER"
+	 WHERE USER_NAME = ?
+	   AND PHONE = ?
+	
+	
+	</entry>
+	
+	<entry key="findPwd">
+	SELECT USER_PWD
+	  FROM "USER"
+	 WHERE USER_ID = ? 
+	   AND USER_NAME = ?
+	   AND PHONE = ?
+	   
+	
+	
+	</entry>
+	<entry key="selectMemberList">
+	
+		SELECT 
+				USER_NO,
+				USER_ID,
+				USER_PWD,
+				USER_NAME,
+				EMAIL,
+				PHONE,
+				ADDRESS,
+				ADDRESS_DETAIL,
+				ADDRESS_CODE,
+				QUIT,
+				MANAGER,
+				REPORT_AMOUNT
+	       FROM "USER"
+       ORDER BY USER_NO DESC
+	
+	</entry>
+	
+	<entry key="selectBlackList">
+	 SELECT 
+	        USER_NO,
+	        USER_ID,
+	        USER_PWD,
+	        USER_NAME,
+	        EMAIL,
+	        PHONE,
+	        ADDRESS,
+	        ADDRESS_DETAIL,
+	        ADDRESS_CODE,
+	        QUIT,
+	        MANAGER,
+	        REPORT_AMOUNT
+	 FROM "USER"     
+	WHERE REPORT_AMOUNT > 5
+	</entry>
+	<entry key="selectMyReviewListASC">
+	SELECT *
+    FROM(
+         SELECT
+                ROWNUM RNUM
+              , A.*
+          FROM(
+                 SELECT
+				       REVIEW_NO
+				     , P_NO  
+				     , REVIEW_TITLE
+				     , REVIEW_DATE
+				     , REIVEW_RATING
+				 FROM REVIEW
+				 WHERE USER_NO=?
+				 AND STATUS='Y'
+				 ORDER BY REVIEW_DATE ASC
+                ) A
+        )
+    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectMyReviewListDESC">
+	SELECT *
+    FROM(
+         SELECT
+                ROWNUM RNUM
+              , A.*
+          FROM(
+                 SELECT
+				       REVIEW_NO
+				     , P_NO  
+				     , REVIEW_TITLE
+				     , REVIEW_DATE
+				     , REIVEW_RATING
+				 FROM REVIEW
+				 WHERE USER_NO=?
+				 AND STATUS='Y'
+				 ORDER BY REVIEW_DATE DESC
+                ) A
+        )
+    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectMyReviewCount">
+	SELECT
+    COUNT(*) LISTCOUNT
+	 FROM (
+	         SELECT
+			       REVIEW_NO
+			     , P_NO  
+			     , REVIEW_TITLE
+			     , REVIEW_DATE
+			     , REIVEW_RATING
+			 FROM REVIEW
+			 WHERE USER_NO=?
+			 AND STATUS='Y'
+	        )
+	</entry>
+	
+	<entry key="selectMyQnaListASC">
+	SELECT *
+    FROM(
+         SELECT
+                ROWNUM RNUM
+              , A.*
+          FROM(
+                 SELECT
+				       INQUIRY_NO
+				     , INQUIRY_TITLE
+				     , INQUIRY_DATE
+				     , INQUIRY_TYPE
+				  FROM INQUIRY
+				  WHERE USER_NO=?
+				  ORDER BY INQUIRY_DATE ASC
+                ) A
+        )
+    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectMyQnaListDESC">
+	SELECT *
+    FROM(
+         SELECT
+                ROWNUM RNUM
+              , A.*
+          FROM(
+                 SELECT
+				       INQUIRY_NO
+				     , INQUIRY_TITLE
+				     , INQUIRY_DATE
+				     , INQUIRY_TYPE
+				  FROM INQUIRY
+				  WHERE USER_NO=?
+				  ORDER BY INQUIRY_DATE DESC
+                ) A
+        )
+    WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	<entry key="selectMyQnaCount">
+	SELECT
+    COUNT(*) LISTCOUNT
+	 FROM (
+	         SELECT
+			       *
+			 FROM INQUIRY
+			 WHERE USER_NO=?
+	        )
+	</entry>
+	
+	
+	
+</properties>

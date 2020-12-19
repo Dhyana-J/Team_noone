@@ -1,0 +1,138 @@
+/*myOrder.css*/
+.wrapper {
+  height: 200vh !important;
+}
+
+.myOrderWrap {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.myOrderWrap > h1 {
+  font-size: 60px;
+  margin-top: 100px;
+}
+
+.myOrderWrap > h2 {
+  margin-top: 70px;
+  margin-bottom: 30px;
+  font-size: 40px;
+}
+
+.myOrderWrap .emptyList {
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 70%;
+  height: 300px;
+  align-self: center;
+}
+
+.myOrderWrap #emptySign {
+  font-size: 100px;
+  text-align: center;
+}
+
+.myOrderWrap #emptyMessage {
+  font-size: 30px;
+}
+
+.myOrderWrap #emptySign,
+.myOrderWrap #emptyMessage {
+  align-self: center;
+}
+
+.myOrderWrap form {
+  display: flex;
+  flex-direction: column;
+}
+
+.myOrderWrap .orderList {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-self: center;
+  width: 70%;
+  height: 500px;
+}
+
+.myOrderWrap #sortSelect {
+  align-self: flex-start;
+  margin-left: 300px;
+  width: 70px;
+  height: 30px;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.myOrderWrap #orderSortForm {
+  height: 30px;
+}
+
+.myOrderWrap .order {
+  align-self: center;
+  border-top: 2px solid gray;
+  border-bottom: 2px solid gray;
+  width: 95%;
+  height: 30%;
+  display: flex;
+}
+
+.myOrderWrap .thumbnail {
+  align-self: center;
+  height: 130px;
+  width: 200px;
+  border: 1px solid gray;
+}
+
+.myOrderWrap .orderInfo {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  width: 60%;
+  margin-left: 10px;
+}
+
+.myOrderWrap .orderInfo > table {
+  align-self: center;
+  width: 50%;
+}
+
+.myOrderWrap .order td {
+  text-align: left;
+}
+
+.myOrderWrap .orderInfo tr:nth-child(3) > td {
+  color: red;
+}
+
+.myOrderWrap .shipInfo {
+  align-self: center;
+  font-size: 20px;
+  width: 40%;
+  /* display: none; */
+}
+
+.myOrderWrap .orderBtn {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.myOrderWrap .orderBtn > button {
+  font-size: 20px;
+  border: none;
+  margin: 5px;
+}
+
+.myOrderWrap .pageNum {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  width: 50%;
+  align-self: center;
+}

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+<entry key="selectInqList">
+	SELECT 
+	       INQUIRY_NO,
+	       USER_NAME,
+	       INQUIRY_TITLE,
+	       INQUIRY_CONTENT,
+	       INQUIRY_DATE,
+	       INQUIRY_STATUS,
+	       INQUIRY_TYPE,
+	       RE_CONTENT,
+	       RE_DATE
+	  FROM INQUIRY     
+	  JOIN "USER" USING(USER_NO)
+	 ORDER
+	   BY INQUIRY_NO DESC
+
+</entry>
+
+<entry key="selectInq">
+
+SELECT 
+       INQUIRY_NO,
+       USER_NAME,
+       INQUIRY_TITLE,
+       INQUIRY_CONTENT,
+       INQUIRY_DATE,
+       INQUIRY_STATUS,
+       INQUIRY_TYPE,
+       RE_CONTENT,
+       RE_DATE
+  FROM INQUIRY     
+  JOIN "USER" USING(USER_NO)
+ WHERE INQUIRY_NO = ?
+
+
+</entry>
+
+<entry key="insertInq">
+
+	INSERT
+	  INTO INQUIRY
+	 (
+	       INQUIRY_NO,
+	       USER_NO,
+	       INQUIRY_TITLE,
+	       INQUIRY_CONTENT,
+	       INQUIRY_DATE,       
+	       INQUIRY_TYPE,       
+	       RE_DATE
+	 )
+	VALUES
+	 (
+	       SEQ_QNO.NEXTVAL,
+	       ?,
+	       ?,
+	       ?,
+	       SYSDATE,
+	       ?,
+	       NULL 
+	 
+	 )
+
+
+
+</entry>
+
+<entry key="insertRe">
+	UPDATE INQUIRY
+	   SET RE_DATE = SYSDATE,
+	       RE_CONTENT = ?,
+	       INQUIRY_STATUS = 'Y'       
+	 WHERE INQUIRY_NO = ?
+	
+
+</entry>
+
+<entry key="updateInq">
+
+	UPDATE INQUIRY
+	   SET INQUIRY_TITLE = ?,
+	       INQUIRY_CONTENT = ?,
+	       INQUIRY_TYPE = ?
+	 WHERE INQUIRY_NO= ?   
+
+
+</entry>
+
+<entry key="deleteInq">
+DELETE INQUIRY
+ WHERE INQUIRY_NO = ?
+
+
+</entry>
+
+<entry key="updateRe">
+	
+	UPDATE INQUIRY
+	   SET RE_CONTENT = ?,
+	       RE_DATE = SYSDATE
+	 WHERE INQUIRY_NO = ? 
+
+
+
+</entry>
+
+<entry key="deleteRe">
+
+ UPDATE INQUIRY
+    SET RE_CONTENT = NULL,
+        RE_DATE = NULL,
+        INQUIRY_STATUS = 'N'
+  WHERE INQUIRY_NO = ? 
+	
+
+
+
+
+
+</entry>
+
+
+
+
+</properties>

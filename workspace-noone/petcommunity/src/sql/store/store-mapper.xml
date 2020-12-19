@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="StoreInsert">
+		INSERT
+		    INTO PRODUCT_BACKUP(
+		                  P_NO
+		                , P_NAME
+		                , PRICE
+		                , DESCRIPTION
+		                , P_STOCK
+		                , P_CATEGORY
+		                , P_BRAND
+		                , P_MODEL
+		                , P_THUMB_URL
+		                , P_TOTAL
+		                )
+		            VALUES(
+		                  SEQ_PNO.NEXTVAL
+		                , ?
+		                , ?
+		                , ?
+		                , ?
+		                , ?
+		                , ?
+		                , ?
+		                , ?
+		                , ?)
+	</entry>
+	<entry key="StoreUpdate">
+		UPDATE PRODUCT
+		    SET
+                P_NAME = ?
+		      , PRICE = ?
+		      , DESCRIPTION = ?
+		      , P_STOCK = ?
+		      , P_CATEGORY = ?
+		      , P_BRAND = ?
+		      , P_MODEL = ?
+		   WHERE
+		        P_NO = ?
+	</entry>
+	<entry key="UrlInsert">
+		INSERT
+		    INTO IMG_URL(
+		                 P_NO
+		                , P_IMG_URL
+		                )
+		            VALUES(
+		                SEQ_PNO.CURRVAL
+		              , ?
+		              )
+	</entry>
+	<entry key="StoreDelete">
+		DELETE FROM PRODUCT
+		WHERE P_NO = ?
+	</entry>
+	<entry key="selectProductList">
+		SELECT *
+		FROM (SELECT ROW_NUMBER() OVER(ORDER BY P_NO DESC) row_num
+		                                , P_NO
+		                                , P_NAME
+		                                , PRICE
+		                                , P_SALES
+		                                , P_THUMB_URL
+		        FROM PRODUCT
+		        WHERE P_CATEGORY = 'D')
+		WHERE row_num BETWEEN ? AND ?
+	</entry>
+	<entry key="selectProductList2">
+		SELECT *
+		FROM (SELECT ROW_NUMBER() OVER(ORDER BY P_NO DESC) row_num
+		                                , P_NO
+		                                , P_NAME
+		                                , PRICE
+		                                , P_SALES
+		                                , P_THUMB_URL
+		        FROM PRODUCT
+		        WHERE P_CATEGORY = 'C')
+		WHERE row_num BETWEEN ? AND ?
+	</entry>
+	<entry key="selectProductList3">
+		SELECT *
+		FROM (SELECT ROW_NUMBER() OVER(ORDER BY P_STOCK ASC) row_num
+		                                , P_NO
+		                                , P_NAME
+		                                , P_STOCK
+		                                , P_THUMB_URL
+		        FROM PRODUCT)
+		WHERE row_num BETWEEN ? AND ?
+	</entry>
+	<entry key="selectProductList4">
+		SELECT *
+		FROM (SELECT ROW_NUMBER() OVER(ORDER BY P_STOCK ASC) row_num
+		                                , P_NO
+		                                , P_NAME
+		                                , P_STOCK
+		                                , P_THUMB_URL
+		        FROM PRODUCT
+		        WHERE P_CATEGORY = 'D')
+		WHERE row_num BETWEEN ? AND ?
+	</entry>
+	<entry key="selectProductList5">
+		SELECT *
+		FROM (SELECT ROW_NUMBER() OVER(ORDER BY P_STOCK ASC) row_num
+		                                , P_NO
+		                                , P_NAME
+		                                , P_STOCK
+		                                , P_THUMB_URL
+		        FROM PRODUCT
+		        WHERE P_CATEGORY = 'C')
+		WHERE row_num BETWEEN ? AND ?
+	</entry>
+	<entry key="selectDetailProduct">
+		SELECT
+			   P_NO
+			 , P_NAME
+		     , PRICE
+		     , P_CATEGORY
+		     , P_STOCK
+		     , P_BRAND
+		     , P_MODEL
+		     , DESCRIPTION
+		     , P_THUMB_URL
+		FROM PRODUCT
+		WHERE P_NO = ?
+	</entry>
+	<entry key="selectDetailUrl">
+		SELECT
+			   P_IMG_URL
+		FROM IMG_URL
+		WHERE P_NO = ?
+	</entry>
+	<entry	key="selectPtotal">
+		SELECT
+		     COUNT(*) 
+		FROM PRODUCT
+		WHERE P_CATEGORY = 'D'
+	</entry>
+	<entry	key="selectPtotal2">
+		SELECT
+		     COUNT(*) 
+		FROM PRODUCT
+		WHERE P_CATEGORY = 'C'
+	</entry>
+	<entry	key="selectPtotal3">
+		SELECT
+		     COUNT(*) 
+		FROM PRODUCT
+	</entry>
+	<entry key="selectReviewList">
+		SELECT * 
+		FROM( SELECT ROW_NUMBER() OVER(ORDER BY REVIEW_DATE DESC) row_num
+		          ,REVIEW_NO
+		          ,REVIEW_TITLE
+		          ,REVIEW_CONTENT
+		          ,REVIEW_DATE
+		          ,REIVEW_RATING
+		          ,P_NO
+		          ,USER_NO
+		          ,USER_NAME
+		       FROM REVIEW
+		       JOIN "USER" USING(USER_NO)
+		       WHERE P_NO=?
+		       AND STATUS='Y')
+		WHERE row_num BETWEEN ? AND ?
+    </entry>
+      
+    <entry key="selectReview">
+    SELECT  
+ 		REVIEW_NO
+		,REVIEW_TITLE
+        ,REVIEW_CONTENT
+        ,REVIEW_DATE
+        ,REIVEW_RATING
+        ,P_NO
+        ,USER_NO
+        ,USER_NAME
+     FROM REVIEW
+     JOIN "USER" USING(USER_NO)
+     WHERE REVIEW_NO=?
+     
+    </entry>
+	<entry key="reviewInsert">
+	INSERT
+		INTO REVIEW(
+            REVIEW_NO
+           ,REVIEW_TITLE
+           ,REVIEW_CONTENT
+           ,REVIEW_DATE
+           ,REIVEW_RATING
+           ,P_NO
+           ,USER_NO
+            )
+            VALUES(
+                SEQ_RNO.NEXTVAL
+               ,?
+               ,?
+               ,SYSDATE
+               ,?
+               ,?
+               ,?           
+            )
+	</entry>
+	<entry	key="selectReviewTotal">
+		SELECT
+		     COUNT(*) 
+		FROM REVIEW
+		WHERE P_NO = ?
+	</entry>
+	<entry key="updateReview">
+	UPDATE
+		       REVIEW
+		   SET REVIEW_TITLE = ?
+             , REIVEW_RATING =?
+		     , REVIEW_CONTENT = ?
+		 WHERE REVIEW_NO = ?
+	</entry>
+	<entry key="deleteReivew">
+		UPDATE 
+			REVIEW
+		SET STATUS = 'N'
+		WHERE REVIEW_NO =?
+	</entry>
+	<entry key="PinquiryInsert">
+	
+    INSERT
+    INTO P_INQUIRY(
+            PI_NO
+           ,SECRET
+           ,PI_TITLE
+           ,PI_CONTENT
+           ,PI_ENROLL
+           ,P_NO
+           ,"User_No"
+            )
+            VALUES(
+                SEQ_PQNO.NEXTVAL
+               ,?
+               ,?
+               ,?
+               ,SYSDATE
+               ,?
+               ,?            
+            )
+	</entry>
+
+
+	<entry key="selectPiList">
+	SELECT * 
+		FROM( SELECT ROW_NUMBER() OVER(ORDER BY PI_ENROLL DESC)  row_num
+           ,PI_NO
+           ,SECRET
+           ,USER_NAME
+           ,PI_TITLE
+           ,PI_CONTENT
+           ,PI_ENROLL
+           ,P_NO
+           ,"User_No"
+           ,COUNT
+           ,REPLY_STATUS
+    FROM P_INQUIRY
+    JOIN "USER" ON(USER_NO="User_No")
+    WHERE P_NO=?
+    AND STATUS='Y')
+    WHERE row_num BETWEEN ? AND ?
+	
+	
+	</entry>
+	
+	<entry key="updateCount">
+		UPDATE
+		       P_INQUIRY
+		   SET COUNT = COUNT+1
+		 WHERE PI_NO=?
+	</entry>
+	
+	<entry key="selectpi">
+	SELECT PI_NO
+           ,SECRET
+           ,USER_NAME
+           ,PI_TITLE
+           ,PI_CONTENT
+           ,PI_ENROLL
+           ,P_NO
+           ,"User_No"
+           ,COUNT
+           ,REPLY_STATUS
+           ,PI_REPLY
+ 	FROM P_INQUIRY
+           JOIN "USER" ON(USER_NO="User_No")
+    WHERE PI_NO=?
+	</entry>
+	<entry key="updatePi">
+	UPDATE
+		       P_INQUIRY
+		   SET SECRET = ?
+             , PI_TITLE =?
+		     , PI_CONTENT = ?
+		 WHERE PI_NO = ?
+	
+	</entry>
+	
+	<entry key="deletePi">
+	UPDATE 
+		 P_INQUIRY
+		SET STATUS = 'N'
+		WHERE PI_NO =?
+	</entry>
+	
+	
+	
+	<entry	key="selectPiTotal">
+		SELECT
+		     COUNT(*) 
+		FROM  P_INQUIRY
+		WHERE P_NO = ?
+	</entry>
+	
+	<entry key="selectStockSearchTotal">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		WHERE P_NAME LIKE '%'|| ? ||'%' 
+	</entry>
+	<entry key="selectStockSearchTotal2">
+		SELECT COUNT(*)
+		FROM PRODUCT
+		WHERE P_NAME LIKE '%'|| ? ||'%' AND P_CATEGORY = ?
+	</entry>
+	<entry key="selectStockSearch">
+		SELECT *
+		FROM (SELECT ROW_NUMBER() OVER(ORDER BY P_STOCK ASC) row_num
+		                                , P_NO
+		                                , P_NAME
+		                                , P_STOCK
+		                                , P_THUMB_URL
+		        FROM PRODUCT
+		        WHERE P_NAME LIKE '%'|| ? ||'%')
+		WHERE row_num BETWEEN ? AND ?
+	</entry>
+	<entry key="selectStockSearch2">
+		SELECT *
+		FROM (SELECT ROW_NUMBER() OVER(ORDER BY P_STOCK ASC) row_num
+		                                , P_NO
+		                                , P_NAME
+		                                , P_STOCK
+		                                , P_THUMB_URL
+		        FROM PRODUCT
+		        WHERE P_NAME LIKE '%'|| ? ||'%' AND P_CATEGORY = ?)
+		WHERE row_num BETWEEN ? AND ?
+	</entry>
+	<entry key="selectRecommand">
+		SELECT *
+				FROM (SELECT ROW_NUMBER() OVER(ORDER BY P_SALES DESC) row_num
+				                                , P_NO
+				                                , P_NAME
+				                                , P_THUMB_URL
+				        FROM PRODUCT
+				       )
+				WHERE row_num BETWEEN 1 AND 3
+	
+	</entry>
+	<entry key="insertShopping">
+	INSERT INTO SHOPPING(
+	             P_NO
+	            ,USER_NO
+	            ,ORDER_NO
+	            ,CART_AMOUNT
+	            )
+	            VALUES(
+	             ?
+	            ,?
+	            ,'7'
+	            ,?
+	            )
+	</entry>
+	
+	<entry key="selectBasketList">
+	select P_NO
+		      ,USER_NO
+		      ,ORDER_NO
+		      ,CART_AMOUNT
+		      ,SHOPPING_STATUS
+		      ,P_THUMB_URL
+		      ,P_NAME
+		      ,PRICE
+		      FROM SHOPPING S
+		      JOIN PRODUCT USING(P_NO)
+		      WHERE USER_NO =?
+		      AND   S.SHOPPING_STATUS='B'
+		
+	</entry>
+	<entry key="BselectP">
+		SELECT P_STOCK, P_SALES
+		FROM PRODUCT
+		WHERE P_NO = ?
+	</entry>
+	<entry key="Buy">
+	UPDATE 
+	    PRODUCT
+	    SET P_STOCK = ?
+	    WHERE P_NO = ?
+	</entry>
+	<entry key="directSale">
+	UPDATE 
+	    PRODUCT
+	    SET P_SALES = ?
+	    WHERE P_NO = ?
+	</entry>
+	<entry key="insertOrder">
+	INSERT INTO 
+	     "ORDER"(
+	     ORDER_NO
+	    ,USER_NO
+	    ,RICEVER_NAME
+	    ,RICVER_CODE
+	    ,RICEVER_ADD
+	    ,RICEVER_DETAIL_ADD
+	    ,RICVER_PHONE
+	    ,ORDER_DATE
+	    ,ORDER_STATUS
+	    ,OREDER_COST
+	    ,D_COMPANY
+	    ,D_NUMBER
+	    ,D_STATUS
+	    ,ORDER_REQUEST
+	    ,PAY_COST
+	    ,PAY_METHOD
+	    ,PAY_DATE
+	    )VALUES(
+	    SEQ_ONO.nextval
+	    ,?
+	    ,'1'
+	    ,'1'
+	    ,'1'
+	    ,'1'
+	    ,'1'
+	    ,SYSDATE
+	    ,'N'
+	    ,'1'
+	    ,'1'
+	    ,'1'
+	    ,'1'
+	    ,'1'
+	    ,'1'
+	    ,'1'
+	    ,SYSDATE
+	    )
+	
+	</entry>
+	
+</properties>
